@@ -2,6 +2,14 @@
     import { ComboboxContent, ComboboxInput, ComboboxItem, ComboboxPortal, ComboboxRoot } from 'reka-ui';
     import { defineModel } from 'vue';
     import { Icon } from '@iconify/vue';
+    import {
+        ToolbarButton,
+        ToolbarLink,
+        ToolbarRoot,
+        ToolbarSeparator,
+        ToolbarToggleGroup,
+        ToolbarToggleItem,
+        } from 'radix-vue'
 
     const selectedSortMethod = defineModel();
 
