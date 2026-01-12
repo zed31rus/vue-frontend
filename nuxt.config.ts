@@ -6,11 +6,18 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["./app/main.css"],
 
+  devServer: {
+    host: '0.0.0.0'
+  },
+
   vite: {
     plugins: [
       tailwindcss(),
-    ]
+    ],
+    server: {
+      allowedHosts: true
+    }
   },
 
-  modules: ["reka-ui"]
+  modules: ["reka-ui", 'motion-v/nuxt', '@pinia/nuxt']
 })
