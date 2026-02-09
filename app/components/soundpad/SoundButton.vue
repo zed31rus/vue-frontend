@@ -80,7 +80,6 @@ const isPaused = () => isActive() && soundpadStore.current?.status === 'PAUSED'
 </template>
 
 <style scoped>
-/* Можно добавить кастомный кубик безье для анимации хёвера */
 button {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
