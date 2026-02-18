@@ -1,5 +1,5 @@
 <script setup>
-    import useSoundpadStore from '~/stores/soundpad';
+    import useSoundpadStore from '~/stores/soundpad.store';
 
     useHead({
         title: "soundpad | zed31rus"
@@ -9,40 +9,49 @@
 
     const history = ref([]);
     const volume = ref(0);
-    const sortMethod = ref("index");
+
+    const sortedSoundList = computed(() => {
+        return [...soundpadStore.soundList].sort(sortMethod.value.sort)
+    })
 
     const sortMethods = [
-    { 
+    {
         id: 1, 
         value: "index", 
         name: "Номер звука", 
         sort: (a, b) => a.index - b.index 
     },
-    { 
+    {
         id: 2, 
         value: "tag", 
         name: "Имя", 
         sort: (a, b) => a.tag.localeCompare(b.tag) 
     },
-    { 
+    {
         id: 3, 
         value: "playCount", 
         name: "Количество воспроизведений", 
         sort: (a, b) => b.playCount - a.playCount
     },
     ]
+
+    const sortMethod = ref(sortMethods[0]);
+
 </script>
 
 <template>
     <div class=" text-neutral-100 selection:bg-neutral-500/30">
         <div class="max-w-[90%] mx-[5%] p-6 flex flex-col h-screen gap-6">
             <SoundpadHeader>
-                <SelectionSort :sort-methods="sortMethods" v-model="sortMethod"/>
+                <SelectionSort
+                :sort-methods="sortMethods"
+                v-model="sortMethod"
+                />
             </SoundpadHeader>
 
             <SoundpadSoundRoot>
                 <SoundpadSoundButton
-                v-for="sound in soundpadStore.soundList"
+                v-for="sound in sortedSoundList"
                 :key="sound.index"
                 :index="sound.index"
                 :tag="sound.tag"

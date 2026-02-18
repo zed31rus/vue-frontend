@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps } from 'vue'
 import { Icon } from '@iconify/vue'
-import useSoundpadStore from '~/stores/soundpad';
+import useSoundpadStore from '~/stores/soundpad.store';
 
 const soundpadStore = useSoundpadStore();
 

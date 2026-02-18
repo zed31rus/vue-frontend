@@ -1,6 +1,6 @@
 <script setup>
   import { onMounted } from 'vue'
-  import useSoundpadStore from './stores/soundpad';
+  import useSoundpadStore from './stores/soundpad.store';
 
   const soundpadStore = useSoundpadStore();
 

@@ -19,8 +19,8 @@ const useSoundpadStore = defineStore('soundpad', {
     }),
     actions: {
         initSocket() {
-            //soundpadSocket.value = io('https://soundpadapi.zed31rus.ru')
-            this.socket = io('http://127.0.0.1:3002')
+            this.socket = io('https://soundpadapi.zed31rus.ru')
+            //this.socket = io('http://127.0.0.1:3002')
 
             this.socket.on('currentUpdated', (data) => {
                 Object.assign(this.current, data)

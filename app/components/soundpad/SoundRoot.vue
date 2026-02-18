@@ -1,6 +1,6 @@
 <template>
       <ScrollAreaRoot 
-        class="flex-1 overflow-hidden bg-neutral-800/50 backdrop-blur  rounded-2xl border border-white/5"
+        class="flex-1 overflow-hidden bg-neutral-800/50 backdrop-blur rounded-2xl border border-white/5"
       >
         <ScrollAreaViewport class="w-full h-full p-6">
           
@@ -11,11 +11,11 @@
         </ScrollAreaViewport>
 
         <ScrollAreaScrollbar
-          class="flex select-none touch-none p-0.5 bg-neutral-950/20 transition-all duration-300 ease-out hover:bg-neutral-950/40 data-[orientation=vertical]:w-2"
+          class="flex select-none touch-none my-1 mr-1 transition-all w-5"
           orientation="vertical"
         >
           <ScrollAreaThumb 
-            class="relative flex-1 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors" 
+            class="relative flex-1 rounded-full bg-neutral-800 transition-colors" 
           />
         </ScrollAreaScrollbar>
       </ScrollAreaRoot>
