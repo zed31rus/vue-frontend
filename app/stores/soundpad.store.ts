@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 const useSoundpadStore = defineStore('soundpad', {
     state: () => ({
@@ -15,7 +15,7 @@ const useSoundpadStore = defineStore('soundpad', {
             durationmmss: "0:00",
             percentage: 0
         },
-        socket: null
+        socket: null as Socket | null
     }),
     actions: {
         initSocket() {

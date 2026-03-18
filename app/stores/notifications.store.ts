@@ -1,0 +1,80 @@
+import { defineStore } from "pinia"
+import { NotificationsTypes } from "~/types/notification"
+
+export const useNotificationsStore = defineStore('notifications', {
+    state: () => ({
+        items: [] as AppNotification[]
+    }),
+    actions: {
+        createNotification(message: string, type: NotificationsTypes, action?: ActionType, duration: number = 3000) {
+            const notification = new AppNotification(message, type, action, duration);
+
+            this.items.unshift(notification);
+
+            notification.addEventListener('close', () => {
+                const index = this.items.indexOf(notification);
+                if (index !== -1) this.items.splice(index, 1);
+            }, { once: true });
+        }
+    }
+})
+
+class AppNotification extends EventTarget {
+    id: string = crypto.randomUUID();
+    message: string;
+    type: NotificationsTypes;
+    isAlive: boolean = true;
+    action: ActionType | null = null;
+    
+    timeoutId: ReturnType<typeof setTimeout> | null = null;
+    startTime: number = 0;
+    remaining: number;
+
+    constructor(message: string, type: NotificationsTypes,  action: ActionType | null = null, duration: number) {
+        super();
+        this.message = message;
+        this.type = type;
+        this.remaining = duration;
+        this.action = action;
+        this.resume();
+    }
+
+    pause() {
+        if (!this.isAlive || !this.timeoutId) return;
+        
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+        this.remaining -= Date.now() - this.startTime;
+    }
+
+    resume() {
+        if (!this.isAlive || this.timeoutId) return;
+        if (this.remaining <= 0) return this.destroy();
+
+        this.startTime = Date.now();
+        this.timeoutId = setTimeout(() => {
+            this.destroy();
+        }, this.remaining);
+    }
+
+    destroy() {
+        if (!this.isAlive) return;
+        this.isAlive = false;
+        if (this.timeoutId) clearTimeout(this.timeoutId);
+
+        this.dispatchEvent(new Event('close'));
+    }
+
+    callback() {
+        if (!this.isAlive) return;
+        if (!this.action) return;
+        this.action.fn();
+        this.destroy();
+    }
+}
+
+type ActionType = {
+    name: string,
+    fn: (...args: any[]) => void
+}
+export type AppNotificationType = InstanceType<typeof AppNotification>

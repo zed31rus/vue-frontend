@@ -53,7 +53,7 @@ const pages = [
 <template>
     <div ref="scope">
 
-        <div class=" absolute m-2 left-0 top-0 z-1000">
+        <div class=" absolute m-2 left-0 top-0 z-99">
             <button @click="toggleMenu" class="toggleMenuButton p-2 rounded-2xl bg-neutral-800/50 backdrop-blur " ref="menuToggleScope">
                 <Icon :icon="menuToggleIcon" :key="isOpen.inProgress" class="w-6 h-6"/>
             </button>
@@ -84,7 +84,5 @@ const pages = [
             </div>
         </div>
     </div>
-
-    <slot></slot>
 
 </template>
