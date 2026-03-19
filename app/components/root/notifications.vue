@@ -1,0 +1,34 @@
+<script setup lang="ts">
+import { useNotificationsStore, type AppNotificationType } from '@/stores/notifications.store';
+import { NotificationsTypes } from '~/types/notification';
+
+const notificationStore = useNotificationsStore();
+
+const getTypeColor = (type: NotificationsTypes): string => {
+    const colors = {
+        [NotificationsTypes.info]: 'bg-cyan-600',
+        [NotificationsTypes.error]: 'bg-red-600',
+        [NotificationsTypes.warn]: 'bg-orange-600',
+    };
+    return colors[type] || 'bg-neutral-400';
+};
+
+const close = (notification: AppNotificationType) => {
+    notification.destroy(); 
+};
+</script>
+
+<template>
+    <NotificationsArea>
+        <NotificationsInstance 
+            v-for="item in notificationStore.items" 
+            :key="item.id"
+            :message="item.message"
+            :color="getTypeColor(item.type)"
+            :mouseEnterAction="() => item.pause" 
+            :mouseLeaveAction="() => item.resume"
+            :clickAction="() => close(item)"
+            :buttonAction="item.action"
+        />
+    </NotificationsArea>
+</template>

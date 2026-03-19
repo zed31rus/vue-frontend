@@ -11,7 +11,7 @@
 
 <template>
   <RootSideBar/>
-  <RootNotificationArea/>
+  <RootNotifications/>
   <NuxtLayout class="w-screen h-screen">
       <NuxtPage class="w-screen h-screen"/>
   </NuxtLayout>

@@ -6,7 +6,7 @@ export const useNotificationsStore = defineStore('notifications', {
         items: [] as AppNotification[]
     }),
     actions: {
-        createNotification(message: string, type: NotificationsTypes, action?: ActionType, duration: number = 3000) {
+        createNotification(message: string, type: NotificationsTypes, action?: CallbackType, duration: number = 3000) {
             const notification = new AppNotification(message, type, action, duration);
 
             this.items.unshift(notification);
@@ -24,13 +24,13 @@ class AppNotification extends EventTarget {
     message: string;
     type: NotificationsTypes;
     isAlive: boolean = true;
-    action: ActionType | null = null;
+    action: CallbackType | null = null;
     
     timeoutId: ReturnType<typeof setTimeout> | null = null;
     startTime: number = 0;
     remaining: number;
 
-    constructor(message: string, type: NotificationsTypes,  action: ActionType | null = null, duration: number) {
+    constructor(message: string, type: NotificationsTypes,  action: CallbackType | null = null, duration: number) {
         super();
         this.message = message;
         this.type = type;
@@ -44,7 +44,9 @@ class AppNotification extends EventTarget {
         
         clearTimeout(this.timeoutId);
         this.timeoutId = null;
-        this.remaining -= Date.now() - this.startTime;
+        if (this.startTime) {
+            this.remaining -= Date.now() - this.startTime;
+        }
     }
 
     resume() {
@@ -68,13 +70,14 @@ class AppNotification extends EventTarget {
     callback() {
         if (!this.isAlive) return;
         if (!this.action) return;
-        this.action.fn();
+        this.action.fn.call(null);
         this.destroy();
     }
 }
 
-type ActionType = {
+export type CallbackType = {
     name: string,
-    fn: (...args: any[]) => void
+    fn: ActionType
 }
 export type AppNotificationType = InstanceType<typeof AppNotification>
+export type ActionType = (...args: any[]) => void
