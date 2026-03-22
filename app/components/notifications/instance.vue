@@ -18,7 +18,7 @@ import type { CallbackType } from '~/composable/notifications';
         @mouseenter="mouseEnterAction()"
         @mouseleave="mouseLeaveAction()"
         class="notification-item pointer-events-auto cursor-pointer 
-                w-auto bg-neutral-800/50 backdrop-blur p-4 rounded-2xl shadow-lg"
+                w-auto bg-neutral-800/50 backdrop-blur-2xl p-4 rounded-xl shadow-lg"
         @click="clickAction()"
     >
         <div class="flex items-center gap-3">

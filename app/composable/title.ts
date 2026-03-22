@@ -7,7 +7,7 @@ export default function useDynamicTitle() {
   useHead({
     title: () => {
       if (notifications.items.length > 0) {
-        return `(${notifications.items.length}) new notifications `;
+        return `(${notifications.items.length}) ${route.meta.title}`;
       }
 
       return (route.meta.title as string);
