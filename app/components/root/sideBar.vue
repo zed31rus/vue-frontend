@@ -1,7 +1,8 @@
 <script setup>
 import { ref, reactive, watch, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
-import { AnimatePresence, useAnimate, stagger } from 'motion-v';
+import { useAnimate, stagger } from 'motion-v';
+import { onClickOutside } from '@vueuse/core';
 
 const isOpen = reactive({
     opened: false,
@@ -45,15 +46,18 @@ watch(() => isOpen.inProgress, async (val) => {
 });
 
 const pages = [
-    { id: 1, name: "Home", path: "/", ico: "material-symbols:family-home-rounded" },
-    { id: 2, name: "Soundpad", path: "/soundpad", ico: "material-symbols:library-music" }
+    { id: 1, name: "Home", path: "/", ico: "material-symbols:family-home-rounded", position: "top" },
+    { id: 2, name: "Soundpad", path: "/soundpad", ico: "material-symbols:library-music", position: "top" },
+    { id: 3, name: "Account", path: "/user/me", ico: "line-md:account", position: "bottom" }
 ];
+
+const sideBar = useTemplateRef('sideBar');
+onClickOutside(sideBar, () => {if (isOpen.opened) toggleMenu()})
 </script>
 
 <template>
     <div ref="scope">
-
-        <div class=" absolute m-2 left-0 top-0 z-99">
+        <div ref="sideBar" class="absolute m-2 left-0 top-0 z-99" >
             <button @click="toggleMenu" class="toggleMenuButton p-2 rounded-2xl bg-neutral-800/50 backdrop-blur " ref="menuToggleScope">
                 <Icon :icon="menuToggleIcon" :key="isOpen.inProgress" class="w-6 h-6"/>
             </button>
@@ -67,19 +71,12 @@ const pages = [
                 v-if="isOpen.opened"
             >
                 <ul class="p-4 flex flex-col h-full space-y-2">
-                    <li v-for="page in pages" :key="page.id" class="opacity-0">
-                        <NuxtLink :to="page.path" class="flex items-center gap-3 p-2 hover:bg-neutral-800/70 rounded-md transition-colors">
-                            <Icon :icon="page.ico" :ssr="true" class="text-xl" />
-                            <span>{{ page.name }}</span>
-                        </NuxtLink>
-                    </li>
-
-                    <li class="mt-auto opacity-0"> 
-                        <NuxtLink to="/user/me" class="flex items-center gap-3 p-2 hover:bg-neutral-800/70 rounded-md transition-colors">
-                            <Icon icon="line-md:account" key="account" class="text-xl"/>
-                            <span>Account</span>
-                        </NuxtLink>
-                    </li>
+                    <SideBarItem v-for="page in pages"
+                        :name="page.name"
+                        :path="page.path"
+                        :icon="page.ico"
+                        :position="page.position"
+                    />
                 </ul>
             </div>
         </div>

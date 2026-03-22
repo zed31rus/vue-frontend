@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute p-2 left-[10%] width-[80%]">
+    <div class="absolute py-2 left-[5vw] w-[90vw]">
         <slot>
         </slot>
     </div>

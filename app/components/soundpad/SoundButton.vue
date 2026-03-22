@@ -1,18 +1,21 @@
-<script setup>
-import { defineProps } from 'vue'
+<script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import useNotificationStore from '~/stores/notifications.store';
 import useSoundpadStore from '~/stores/soundpad.store';
+import SoundpadService from '~/utils/soundpad.service';
 
 const soundpadStore = useSoundpadStore();
+const notificationStore = useNotificationStore();
+const soundpadService = new SoundpadService(notificationStore);
 
-const { index, tag, durationmmss, playCount } = defineProps({
-  index: Number,
+const { index, tag, durationmmss, playCount } = defineProps<{
+  index: number,
   tag: String,
   durationmmss: String,
-  playCount: Number,
-})
+  playCount: number,
+}>();
 
-const soundpadPlay = (i) => soundpadStore.play(i);
+async function playSound(index: number) { await soundpadService.play(index) }
 
 const isActive = () => soundpadStore.current?.sound?.index === index
 const isPlaying = () => isActive() && soundpadStore.current?.status === 'PLAYING'
@@ -21,7 +24,7 @@ const isPaused = () => isActive() && soundpadStore.current?.status === 'PAUSED'
 
 <template>
   <button
-    @click="soundpadPlay(index)"
+    @click="playSound(index)"
     :class="[
       'group relative flex flex-col justify-between p-3 rounded-xl transition-all duration-300 border outline-none h-20 w-full overflow-hidden',
       isActive() 

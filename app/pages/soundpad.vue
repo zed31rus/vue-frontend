@@ -1,11 +1,12 @@
 <script setup>
     import useSoundpadStore from '~/stores/soundpad.store';
 
-    useHead({
-        title: "soundpad | zed31rus"
+    definePageMeta({
+        title: 'zed31rus.ru | Soundpad'
     })
 
     const soundpadStore = useSoundpadStore();
+    soundpadStore.initSocket();
 
     const history = ref([]);
     const volume = ref(0);
@@ -41,7 +42,7 @@
 
 <template>
     <div class=" text-neutral-100 selection:bg-neutral-500/30">
-        <div class="max-w-[90%] mx-[5%] p-6 flex flex-col h-screen gap-6">
+        <div class=" flex flex-col w-full gap-1 max-h-[calc(100% - 8px)]">
             <SoundpadHeader>
                 <SelectionSort
                 :sort-methods="sortMethods"
@@ -57,6 +58,7 @@
                 :tag="sound.tag"
                 :durationmmss="sound.durationmmss"
                 :playCount="sound.playCount"
+                :ssr="false"
                 />
             </SoundpadSoundRoot>
         </div>

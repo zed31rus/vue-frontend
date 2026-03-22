@@ -1,10 +1,14 @@
 <script setup lang="ts">
-    import { useNotificationsStore } from '#imports';
-import { NotificationsTypes } from '~/types/notification';
+    import useNotificationStore from '~/stores/notifications.store';
+    import { NotificationsTypes } from '~/types/notification';
 
-    const notificationStore = useNotificationsStore();
+    definePageMeta({
+        title: "zed31rus.ru | Home"
+    })
 
-    function a() {
+    const notificationStore = useNotificationStore();
+
+    async function a() {
         alert("ALARM!!!")
     }
 

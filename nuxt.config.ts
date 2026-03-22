@@ -21,5 +21,11 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ["reka-ui", 'motion-v/nuxt', '@pinia/nuxt']
+  routeRules: {
+    "/soundpad": {
+      ssr: false
+    }
+  },
+
+  modules: ["reka-ui", 'motion-v/nuxt', '@pinia/nuxt', "@vueuse/nuxt"]
 })

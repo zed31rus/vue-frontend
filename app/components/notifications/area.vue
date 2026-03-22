@@ -11,12 +11,12 @@
 </script>
 
 <template>
-    <div class="fixed inset-0 z-[100] pointer-events-none"> 
+    <div class="fixed inset-0 z-[99999] pointer-events-none"> 
         
         <TransitionGroup 
             name="notificationList" 
             tag="ul" 
-            class="relative w-full h-full list-none flex flex-col items-end gap-3 p-4"
+            class="relative w-auto h-full list-none flex flex-col items-end gap-3 p-4"
             @before-leave="beforeLeave"
         >
         
@@ -32,12 +32,12 @@
 .notificationList-move,
 .notificationList-enter-active,
 .notificationList-leave-active {
-  transition: all 1s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .notificationList-enter-from,
 .notificationList-leave-to {
-  transform: translateX(150px);
+  transform: translateX(120%);
 }
 
 .notificationList-leave-active {

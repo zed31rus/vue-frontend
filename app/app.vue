@@ -1,18 +1,13 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue'
-  import useSoundpadStore from './stores/soundpad.store';
+  import useDynamicTitle from './composable/title';
 
-  const soundpadStore = useSoundpadStore();
-
-  onMounted(() => {
-    soundpadStore.initSocket();
-  })
+  useDynamicTitle();
 </script>
 
 <template>
-  <RootSideBar/>
-  <RootNotifications/>
-  <NuxtLayout class="w-screen h-screen">
-      <NuxtPage class="w-screen h-screen"/>
-  </NuxtLayout>
+    <RootSideBar/>
+    <RootNotifications/>
+    <NuxtLayout>
+        <NuxtPage/>
+    </NuxtLayout>
 </template>

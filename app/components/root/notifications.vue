@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useNotificationsStore, type AppNotificationType } from '@/stores/notifications.store';
+import useNotificationStore from '@/stores/notifications.store';
+import type { AppNotificationType } from '~/composable/notifications';
 import { NotificationsTypes } from '~/types/notification';
 
-const notificationStore = useNotificationsStore();
+const notificationStore = useNotificationStore();
 
 const getTypeColor = (type: NotificationsTypes): string => {
     const colors = {
@@ -25,8 +26,8 @@ const close = (notification: AppNotificationType) => {
             :key="item.id"
             :message="item.message"
             :color="getTypeColor(item.type)"
-            :mouseEnterAction="() => item.pause" 
-            :mouseLeaveAction="() => item.resume"
+            :mouseEnterAction="() => item.pause()" 
+            :mouseLeaveAction="() => item.resume()"
             :clickAction="() => close(item)"
             :buttonAction="item.action"
         />

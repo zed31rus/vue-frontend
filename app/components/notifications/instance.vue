@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CallbackType } from '~/composable/notifications';
+
 
     const { message, mouseEnterAction, mouseLeaveAction, clickAction, buttonAction } = defineProps<{
         message: String,
@@ -20,7 +22,7 @@
         @click="clickAction()"
     >
         <div class="flex items-center gap-3">
-            <span class="text-sm font-medium text-white/90 tracking-wide flex-1">
+            <span class="text-sm font-medium text-white/90 tracking-wide flex-1 whitespace-nowrap">
                 {{ message }}
             </span>
             <div :class="['w-1.5 h-5 rounded-full shrink-0', color]"></div>
@@ -28,7 +30,7 @@
 
         <div v-if="buttonAction" class="mt-3 flex justify-end">
             <button 
-            @click.stop="buttonAction.fn()" 
+            @click.once.stop="buttonAction.fn()" 
             class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider 
                 text-white bg-white/10 hover:bg-white/20 
                 border border-white/10 rounded-lg transition-colors
