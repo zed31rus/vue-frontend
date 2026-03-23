@@ -9,12 +9,16 @@ export default class SounpadService {
 
     async play(index: number) {
         try {
-            const res = await fetch('http://127.0.0.1:3003/soundpad/playSound', {
+            const res = await fetch('https://soundpadapi.zed31rus.ru/soundpad/playSound', {
             method: 'POST',
             body: JSON.stringify({ soundId: index }),
             headers: { 'Content-Type': 'application/json' }
             });
-            return res
+            
+            if (res.ok) {
+                this.notificationStore.createNotification(`Sound ${index} is playing!`, NotificationsTypes.info)
+            }
+
         } catch {
             this.notificationStore.createNotification("Error playing sound", NotificationsTypes.error, { name: "Retry", fn: () => this.play(index) })
         }
@@ -26,7 +30,11 @@ export default class SounpadService {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
             });
-            return res
+
+            if (res.ok) {
+                this.notificationStore.createNotification(`Sound stopped`, NotificationsTypes.info)
+            }
+
         } catch {
             this.notificationStore.createNotification("Error stopping sound", NotificationsTypes.error)
         }
@@ -38,7 +46,11 @@ export default class SounpadService {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
             });
-            return res
+            
+            if (res.ok) {
+                this.notificationStore.createNotification(`Sound paused`, NotificationsTypes.info)
+            }
+
         } catch {
             this.notificationStore.createNotification("Error pausing sound", NotificationsTypes.error)
         }
@@ -51,7 +63,11 @@ export default class SounpadService {
             body: JSON.stringify({ percentage }),
             headers: { 'Content-Type': 'application/json' }
             });
-            return res
+            
+            if (res.ok) {
+                this.notificationStore.createNotification(`Sound rewinded to ${percentage}%`, NotificationsTypes.info)
+            }
+
         } catch {
             this.notificationStore.createNotification("Error rewinding sound", NotificationsTypes.error)
         }
@@ -64,7 +80,11 @@ export default class SounpadService {
             body: JSON.stringify({ volume: volumeVal }),
             headers: { 'Content-Type': 'application/json' }
             });
-            return res
+            
+            if (res.ok) {
+                this.notificationStore.createNotification(`Volume setted to ${volumeVal}`, NotificationsTypes.info)
+            }
+
         } catch {
             this.notificationStore.createNotification("Error setting volume", NotificationsTypes.error)
         }

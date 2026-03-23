@@ -33,7 +33,7 @@ import type { CallbackType } from '~/composable/notifications';
             @click.once.stop="buttonAction.fn()" 
             class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider 
                 text-white bg-white/10 hover:bg-white/20 
-                border border-white/10 rounded-lg transition-colors
+                rounded-lg transition-colors
                 active:scale-95 duration-200"
             >
             {{ buttonAction.name }}
