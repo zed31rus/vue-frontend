@@ -8,9 +8,7 @@ const handleLogin = () => {};
 </script>
 
 <template>
-<div class="min-h-screen w-full flex items-center justify-center">
-    <div class="w-full max-w-md bg-neutral-800/50 backdrop-blur-2xl p-8 rounded-2xl shadow-2xl">
-        
+    <div>
         <div class="flex items-center justify-between mb-8">
             <div>
                 <h1 class="text-2xl font-semibold text-white/90 tracking-tight">Sign in</h1>
@@ -45,6 +43,18 @@ const handleLogin = () => {};
             </div>
 
         </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-white/40">
+                Don't have an account? 
+                <button 
+                    @click="$emit('switch')" 
+                    type="button"
+                    class="text-cyan-400 hover:text-cyan-300 font-medium transition-colors ml-1"
+                >
+                Create one
+                </button>
+            </p>
+        </div>
     </div>
-</div>
 </template>

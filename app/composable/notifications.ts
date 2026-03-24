@@ -22,7 +22,7 @@ export default class AppNotification extends EventTarget {
 
     pause() {
         if (!this.isAlive || !this.timeoutId) return;
-        
+
         clearTimeout(this.timeoutId);
         this.timeoutId = null;
         if (this.startTime) {
