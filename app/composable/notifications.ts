@@ -2,7 +2,11 @@ import type { NotificationsTypes } from "~/types/notification";
 
 export default class AppNotification extends EventTarget {
     id: string = crypto.randomUUID();
-    message: string;
+    content: {
+        title: string,
+        message: string,
+        additional: string,
+    };
     type: NotificationsTypes;
     isAlive: boolean = true;
     action: CallbackType | null = null;
@@ -11,9 +15,9 @@ export default class AppNotification extends EventTarget {
     startTime: number = 0;
     remaining: number;
 
-    constructor(message: string, type: NotificationsTypes,  action: CallbackType | null = null, duration: number) {
+    constructor(type: NotificationsTypes, content : { title: string, message: string, additional: string }, action: CallbackType | null = null, duration: number) {
         super();
-        this.message = message;
+        this.content = content;
         this.type = type;
         this.remaining = duration;
         this.action = action;

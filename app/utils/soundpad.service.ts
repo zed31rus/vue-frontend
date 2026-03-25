@@ -15,12 +15,8 @@ export default class SounpadService {
             headers: { 'Content-Type': 'application/json' }
             });
             
-            if (res.ok) {
-                this.notificationStore.createNotification(`Sound ${index} is playing!`, NotificationsTypes.info)
-            }
-
         } catch {
-            this.notificationStore.createNotification("Error playing sound", NotificationsTypes.error, { name: "Retry", fn: () => this.play(index) })
+            this.notificationStore.createNotification( NotificationsTypes.error, { title: 'Soundpad error', message: 'Error playing sound', additional: 'zed31rus.ru'},{ name: "Retry", fn: () => this.play(index) })
         }
     }
 
@@ -31,12 +27,8 @@ export default class SounpadService {
             headers: { 'Content-Type': 'application/json' }
             });
 
-            if (res.ok) {
-                this.notificationStore.createNotification(`Sound stopped`, NotificationsTypes.info)
-            }
-
         } catch {
-            this.notificationStore.createNotification("Error stopping sound", NotificationsTypes.error)
+            this.notificationStore.createNotification( NotificationsTypes.error, { title: 'Soundpad error', message: 'Error stopping sound', additional: 'zed31rus.ru'},{ name: "Retry", fn: () => this.stop() })
         }
     }
 
@@ -47,12 +39,9 @@ export default class SounpadService {
             headers: { 'Content-Type': 'application/json' }
             });
             
-            if (res.ok) {
-                this.notificationStore.createNotification(`Sound paused`, NotificationsTypes.info)
-            }
 
         } catch {
-            this.notificationStore.createNotification("Error pausing sound", NotificationsTypes.error)
+            this.notificationStore.createNotification( NotificationsTypes.error, { title: 'Soundpad error', message: 'Error pausing sound', additional: 'zed31rus.ru'},{ name: "Retry", fn: () => this.pause() })
         }
     }
 
@@ -63,13 +52,9 @@ export default class SounpadService {
             body: JSON.stringify({ percentage }),
             headers: { 'Content-Type': 'application/json' }
             });
-            
-            if (res.ok) {
-                this.notificationStore.createNotification(`Sound rewinded to ${percentage}%`, NotificationsTypes.info)
-            }
 
         } catch {
-            this.notificationStore.createNotification("Error rewinding sound", NotificationsTypes.error)
+            this.notificationStore.createNotification( NotificationsTypes.error, { title: 'Soundpad error', message: 'Error rewinding sound', additional: 'zed31rus.ru'},{ name: "Retry", fn: () => this.jump(percentage) })
         }
     }
 
@@ -81,12 +66,8 @@ export default class SounpadService {
             headers: { 'Content-Type': 'application/json' }
             });
             
-            if (res.ok) {
-                this.notificationStore.createNotification(`Volume setted to ${volumeVal}`, NotificationsTypes.info)
-            }
-
         } catch {
-            this.notificationStore.createNotification("Error setting volume", NotificationsTypes.error)
+            this.notificationStore.createNotification( NotificationsTypes.error, { title: 'Soundpad error', message: 'Error setting volume', additional: 'zed31rus.ru'},{ name: "Retry", fn: () => this.setVolume(volumeVal) })
         }
     }
 }

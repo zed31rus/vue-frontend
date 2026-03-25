@@ -13,7 +13,7 @@ const notificationStore = useNotificationStore();
 
 const handleRegister = () => {
     if (password.value !== confirmPassword.value) {
-        notificationStore.createNotification("Passwords do not match", NotificationsTypes.error);
+        notificationStore.createNotification(NotificationsTypes.error, {title: 'Registration error', message: 'Passwords do not match', additional: 'zed31rus.ru'} );
         return;
     }
 };
@@ -21,7 +21,7 @@ const handleRegister = () => {
 
 <template>
     <div>
-        
+
         <div class="flex items-center justify-between mb-8">
             <div>
                 <h1 class="text-2xl font-semibold text-white/90 tracking-tight">Create Account</h1>

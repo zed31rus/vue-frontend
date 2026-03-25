@@ -15,17 +15,17 @@
 </script>
 <template>
     <div>
-        <button @click="notificationStore.createNotification('click!!!', NotificationsTypes.info)">
+        <button @click="notificationStore.createNotification(NotificationsTypes.info, { title: 'Info', message: 'Click!', additional: 'zed31rus.ru' })">
             info click
         </button>
     </div>
     <div>
-        <button @click="notificationStore.createNotification('ALARM', NotificationsTypes.warn, { name: 'ALARM', fn: a })">
+        <button @click="notificationStore.createNotification(NotificationsTypes.warn, { title: 'Warn', message: 'Alarm!!!', additional: 'zed31rus.ru' }, { name: 'ALARM', fn: a })">
             warn ALARM!!!
         </button>
     </div>
     <div>
-        <button @click="notificationStore.createNotification('BOOM', NotificationsTypes.error)">
+        <button @click="notificationStore.createNotification(NotificationsTypes.error, { title: 'Error', message: 'BOOM', additional: 'zed31rus.ru' })">
             error BOOM
         </button>
     </div>

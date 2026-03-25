@@ -24,7 +24,9 @@ const close = (notification: AppNotificationType) => {
         <NotificationsInstance 
             v-for="item in notificationStore.items" 
             :key="item.id"
-            :message="item.message"
+            :title="item.content.title"
+            :message="item.content.message"
+            :additional="item.content.additional"
             :color="getTypeColor(item.type)"
             :mouseEnterAction="() => item.pause()" 
             :mouseLeaveAction="() => item.resume()"

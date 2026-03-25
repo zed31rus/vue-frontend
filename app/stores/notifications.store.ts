@@ -7,8 +7,8 @@ const useNotificationStore = defineStore('notificationStore', {
         items: [] as AppNotification[]
     }),
     actions: {
-        createNotification(message: string, type: NotificationsTypes, action?: CallbackType, duration: number = 3000) {
-            const notification = new AppNotification(message, type, action, duration);
+        createNotification(type: NotificationsTypes, content : { title: string, message: string, additional: string }, action: CallbackType | null = null, duration: number = 3000) {
+            const notification = new AppNotification(type, content, action, duration);
 
             this.items.unshift(notification);
 
@@ -16,6 +16,8 @@ const useNotificationStore = defineStore('notificationStore', {
                 const index = this.items.indexOf(notification);
                 if (index !== -1) this.items.splice(index, 1);
             }, { once: true });
+
+            return notification;
         }
     }
 });
