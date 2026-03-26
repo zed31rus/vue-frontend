@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from 'vue';
+
 const mode = ref("login"); // 'login' или 'register'
+
+definePageMeta({
+    title: `zed31rus.ru | ${mode.value}`
+})
 
 const container = ref(null);
 
@@ -21,7 +26,7 @@ const onEnter = (el) => {
   <div class="min-h-screen w-full flex items-center justify-center">
     <div ref="container" class="w-full max-w-md bg-neutral-900/50 border border-white/5 backdrop-blur-2xl p-8 rounded-2xl shadow-2xl overflow-hidden relative">
       
-      <Transition name="auth" mode="out-in" @enter="onEnter" appear>
+      <Transition name="auth" mode="out-in" @enter="onEnter">
         <AuthLogin 
           v-if="mode === 'login'" 
           :key="'login'"
