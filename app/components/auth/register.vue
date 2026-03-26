@@ -1,22 +1,48 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import useNotificationStore from '~/stores/notifications.store';
-import { NotificationsTypes } from '~/types/notification';
+    import { Icon } from '@iconify/vue';
+    import { ref } from 'vue';
+    import useNotificationStore from '~/stores/notifications.store';
+    import { NotificationsTypes } from '~/types/notification';
 
-const login = ref('');
-const username = ref('');
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+    const usernamePlaceholderInitialState = 'Choose a name';
 
-const notificationStore = useNotificationStore();
+    const login = ref('');
+    const username = ref('');
+    const usernamePlaceholder = ref(usernamePlaceholderInitialState);
+    const email = ref('');
+    const password = ref('');
+    const confirmPassword = ref('');
+    const passwordIsVisible = ref(false);
+    const confirmPasswordIsVisible = ref(false);
 
-const handleRegister = () => {
-    if (password.value !== confirmPassword.value) {
-        notificationStore.createNotification(NotificationsTypes.error, {title: 'Registration error', message: 'Passwords do not match', additional: 'zed31rus.ru'} );
-        return;
-    }
-};
+
+    watch(login, (newState, oldState) => {
+        if (usernamePlaceholder.value === oldState || usernamePlaceholder.value.length === 0 || usernamePlaceholder.value == usernamePlaceholderInitialState) {
+            usernamePlaceholder.value = newState
+        };
+        if (newState.length == 0) {
+            usernamePlaceholder.value = usernamePlaceholderInitialState;
+        }
+    });
+
+    const notificationStore = useNotificationStore();
+
+    function handleRegister() {
+        if (password.value !== confirmPassword.value) {
+            notificationStore.createNotification(NotificationsTypes.error, { title: 'Registration error', message: 'Passwords do not match', additional: 'zed31rus.ru'} );
+            return;
+        }
+
+        if (usernamePlaceholder.value == usernamePlaceholderInitialState) return
+
+        const formLogin = login.value;
+        const formUsername = username.value || usernamePlaceholder.value;
+        const formPassword = password.value;
+        const formEmail = email.value;
+
+        notificationStore.createNotification(NotificationsTypes.info, { title: 'Dev auth data', message: `login: ${formLogin} \n username: ${formUsername} \n email: ${formEmail} \n password: ${formPassword}`, additional: "zed31rus.ru" })
+    };
+
 </script>
 
 <template>
@@ -42,10 +68,12 @@ const handleRegister = () => {
 
             <div class="space-y-2">
                 <label class="text-xs font-medium text-white/50 uppercase tracking-widest ml-1">Username</label>
-                <input v-model="username" type="text" placeholder="Choose a name"
-                    class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
-                    focus:outline-none focus:ring-2 focus:ring-emerald-600/50 focus:bg-white/10 transition-all duration-300"
-                    required />
+                <div class="relative h-12">
+                    <input v-model="username" :placeholder="usernamePlaceholder" type="text"
+                        class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
+                        focus:outline-none focus:ring-2 focus:ring-emerald-600/50 focus:bg-white/10 transition-all duration-300"
+                        />
+                </div>
             </div>
 
             <div class="space-y-2">
@@ -58,18 +86,24 @@ const handleRegister = () => {
 
             <div class="space-y-2">
                 <label class="text-xs font-medium text-white/50 uppercase tracking-widest ml-1">Password</label>
-                <input v-model="password" type="password" placeholder="••••••••"
-                    class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
-                    focus:outline-none focus:ring-2 focus:ring-emerald-600/50 focus:bg-white/10 transition-all duration-300"
-                    required />
+                <div class="relative h-12">
+                    <input v-model="password" :type="passwordIsVisible ? 'text' : 'password'" :placeholder="passwordIsVisible ? 'My strong password !' : '••••••••'"
+                        class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
+                        focus:outline-none focus:ring-2 focus:ring-emerald-600/50 focus:bg-white/10 transition-all duration-300"
+                        required />
+                    <button type="button" @click="passwordIsVisible = !passwordIsVisible" class="absolute right-8 top-[24px] -translate-y-[50%]"> <div class="bg-black h-2 w-2"></div> </button>
+                </div>
             </div>
 
             <div class="space-y-2">
                 <label class="text-xs font-medium text-white/50 uppercase tracking-widest ml-1">Confirm Password</label>
-                <input v-model="confirmPassword" type="password" placeholder="••••••••"
-                    class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
-                    focus:outline-none focus:ring-2 focus:ring-emerald-600/50 focus:bg-white/10 transition-all duration-300"
-                    required />
+                <div class="relative h-12">
+                    <input v-model="confirmPassword" :type="confirmPasswordIsVisible ? 'text' : 'password'" :placeholder="confirmPasswordIsVisible ? 'My strong password !' : '••••••••'"
+                        class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
+                        focus:outline-none focus:ring-2 focus:ring-emerald-600/50 focus:bg-white/10 transition-all duration-300"
+                        required />
+                    <button type="button" @click="confirmPasswordIsVisible = !confirmPasswordIsVisible" class="absolute right-8 top-[24px] -translate-y-[50%]"> <div class="bg-black h-2 w-2"></div> </button>
+                </div>
             </div>
 
             <div class="pt-4">

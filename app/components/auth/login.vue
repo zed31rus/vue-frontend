@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+    import { ref } from 'vue';
+    import useNotificationStore from '~/stores/notifications.store';
+    import { NotificationsTypes } from '~/types/notification';
 
-const login = ref('');
-const password = ref('');
+    const login = ref('');
+    const password = ref('');
+    const passwordIsVisible = ref(false);
 
-const handleLogin = () => {};
+    const notificationsStore = useNotificationStore();
+
+    function handleLogin() {
+
+        const formLogin = login.value;
+        const formPassword = password.value;
+
+        notificationsStore.createNotification(NotificationsTypes.info, {title: 'dev login data', message: `login: ${formLogin} \n passwword: ${formPassword}`, additional: 'zed31rus.ru'})
+
+    };
+
 </script>
 
 <template>
@@ -12,7 +25,7 @@ const handleLogin = () => {};
         <div class="flex items-center justify-between mb-8">
             <div>
                 <h1 class="text-2xl font-semibold text-white/90 tracking-tight">Sign in</h1>
-                <p class="text-sm text-white/40 mt-1">Return to our community today</p>
+                <p class="text-sm text-white/40 mt-1">Return to our community</p>
             </div>
             <div class="w-1.5 h-12 rounded-full bg-cyan-600"></div>
         </div>
@@ -28,11 +41,14 @@ const handleLogin = () => {};
             </div>
 
             <div class="space-y-2">
-                <label class="text-xs font-medium text-white/50 uppercase tracking-widest ml-1">Password</label>
-                <input v-model="password" type="password" placeholder="••••••••"
-                    class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
-                    focus:outline-none focus:ring-2 focus:ring-cyan-600/50 focus:bg-white/10 transition-all duration-300"
-                    required />
+                    <label class="text-xs font-medium text-white/50 uppercase tracking-widest ml-1">Password</label>
+                <div class="relative">
+                    <input v-model="password" :type="passwordIsVisible ? 'text' : 'password'" :placeholder="passwordIsVisible? 'My strong password !' : '••••••••'"
+                        class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
+                        focus:outline-none focus:ring-2 focus:ring-cyan-600/50 focus:bg-white/10 transition-all duration-300"
+                        required />
+                        <button @click="passwordIsVisible = !passwordIsVisible" type="button" class="absolute right-8 top-[24px] -translate-y-[50%]"> <div class="bg-black h-2 w-2"></div> </button>
+                </div>
             </div>
 
             <div class="pt-4">
@@ -52,7 +68,7 @@ const handleLogin = () => {};
                     type="button"
                     class="text-cyan-400 hover:text-cyan-300 font-medium transition-colors ml-1"
                 >
-                Create one
+                    Create one
                 </button>
             </p>
         </div>
