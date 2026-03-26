@@ -14,3 +14,23 @@ export default function useDynamicTitle() {
     }
   });
 }
+
+export class DynamicTitle {
+  notifications: ReturnType<typeof useNotificationStore>;
+  pageTitle: string;
+
+  constructor() {
+    this.notifications = useNotificationStore();
+    this.pageTitle = 'zed31rus.ru';
+
+  useHead({
+    title: () => {
+      if (this.notifications.items.length > 0) {
+        return `(${this.notifications.items.length}) ${this.pageTitle}`;
+      }
+
+      return (this.pageTitle as string);
+    }
+  });
+  }
+}
