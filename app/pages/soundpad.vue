@@ -1,9 +1,9 @@
 <script setup>
     import useSoundpadStore from '~/stores/soundpad.store';
+    import DynamicTitle from '~/composable/title';
 
-    definePageMeta({
-        title: 'zed31rus.ru | Soundpad'
-    })
+    const dynamicTitle = new DynamicTitle();
+    dynamicTitle.setCurrentPageTitle('soundpad')
 
     const soundpadStore = useSoundpadStore();
     soundpadStore.initSocket();
