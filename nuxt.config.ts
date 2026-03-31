@@ -27,5 +27,5 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ["reka-ui", 'motion-v/nuxt', '@pinia/nuxt', "@vueuse/nuxt"]
+  modules: ["reka-ui", 'motion-v/nuxt', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', "@vueuse/nuxt"]
 })

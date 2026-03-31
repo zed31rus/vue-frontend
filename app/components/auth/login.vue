@@ -3,19 +3,38 @@
     import { ref } from 'vue';
     import useNotificationStore from '~/stores/notifications.store';
     import { NotificationsTypes } from '~/types/notification';
+    import type { User } from '~/types/user';
 
     const login = ref('');
     const password = ref('');
     const passwordIsVisible = ref(false);
 
     const notificationsStore = useNotificationStore();
+    const userStore = useUserStore();
 
-    function handleLogin() {
+    async function handleLogin() {
 
         const formLogin = login.value;
         const formPassword = password.value;
 
-        notificationsStore.createNotification(NotificationsTypes.info, {title: 'dev login data', message: `login: ${formLogin} \n passwword: ${formPassword}`, additional: 'zed31rus.ru'})
+        const res = await fetch('http://localhost:3100/auth/login', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                login: formLogin,
+                password: formPassword,
+            })
+        });
+
+        if (!res.ok) notificationsStore.createNotification(NotificationsTypes.error, { title: "Login error", message: "error while logging in", additional: "zed31rus.ru" })
+
+        const body = await res.json() as { user: User };
+
+        console.log(body)
+
+        userStore.setUser(body.user);
 
     };
 

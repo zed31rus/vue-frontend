@@ -1,6 +1,6 @@
 import useNotificationStore from "./notifications.store";
 
-const useTitleStore = defineStore('Title', {
+const useTitleStore = defineStore('title', {
     state: () => ({
         currentPageTitle : ''
     }), actions: {
