@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import DynamicTitle from './composable/title';
-import useNotificationStore from './stores/notifications.store';
+  import useNotificationStore from './stores/notifications.store';
+import useTitleStore from './stores/title.store';
 
   const notificationStore = useNotificationStore();
 
-  const dynamicTitle = new DynamicTitle(notificationStore);
-  dynamicTitle.init();
+  const titleStore = useTitleStore();
+  titleStore.init();
 
 </script>
 

@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue';
+import useTitleStore from '~/stores/title.store';
 
 const mode = ref("login"); // 'login' или 'register'
 
-definePageMeta({
-    title: `zed31rus.ru | ${mode.value}`
-})
+const titleStore = useTitleStore();
+titleStore.setCurrentPageTitle('Auth')
 
 const container = ref(null);
 

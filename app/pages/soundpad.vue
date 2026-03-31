@@ -1,42 +1,57 @@
-<script setup>
-    import useSoundpadStore from '~/stores/soundpad.store';
-    import DynamicTitle from '~/composable/title';
+<script setup lang="ts">
+import { ref, computed } from 'vue'; 
+import useSoundpadStore from '~/stores/soundpad.store';
+import useTitleStore from '~/stores/title.store';
 
-    const dynamicTitle = new DynamicTitle();
-    dynamicTitle.setCurrentPageTitle('soundpad')
+interface Sound {
+  index: number;
+  tag: string;
+  playCount: number;
+  durationmmss: string;
+}
 
-    const soundpadStore = useSoundpadStore();
-    soundpadStore.initSocket();
+interface SortMethod {
+  id: number;
+  value: string;
+  name: string;
+  sort: (a: Sound, b: Sound) => number;
+}
 
-    const history = ref([]);
-    const volume = ref(0);
+const titleStore = useTitleStore();
+titleStore.setCurrentPageTitle('Soundpad');
 
-    const sortedSoundList = computed(() => {
-        return [...soundpadStore.soundList].sort(sortMethod.value.sort)
-    })
+const soundpadStore = useSoundpadStore();
+soundpadStore.initSocket();
 
-    const sortMethods = [
-    {
-        id: 1, 
-        value: "index", 
-        name: "Номер звука", 
-        sort: (a, b) => a.index - b.index 
-    },
-    {
-        id: 2, 
-        value: "tag", 
-        name: "Имя", 
-        sort: (a, b) => a.tag.localeCompare(b.tag) 
-    },
-    {
-        id: 3, 
-        value: "playCount", 
-        name: "Количество воспроизведений", 
-        sort: (a, b) => b.playCount - a.playCount
-    },
-    ]
+const history = ref<any[]>([]); 
+const volume = ref<number>(0);
 
-    const sortMethod = ref(sortMethods[0]);
+const sortMethods: SortMethod[] = [
+  {
+    id: 1,
+    value: "index",
+    name: "Номер звука",
+    sort: (a, b) => a.index - b.index
+  },
+  {
+    id: 2,
+    value: "tag",
+    name: "Имя",
+    sort: (a, b) => a.tag.localeCompare(b.tag)
+  },
+  {
+    id: 3,
+    value: "playCount",
+    name: "Количество воспроизведений",
+    sort: (a, b) => b.playCount - a.playCount
+  },
+];
+
+const sortMethod = ref<SortMethod>(sortMethods[0]!);
+
+const sortedSoundList = computed<Sound[]>(() => {
+  return [...soundpadStore.soundList].sort(sortMethod.value.sort);
+});
 
 </script>
 

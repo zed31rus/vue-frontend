@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
     import useNotificationStore from '~/stores/notifications.store';
     import { NotificationsTypes } from '~/types/notification';
@@ -47,7 +48,7 @@
                         class="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder:text-white/20 
                         focus:outline-none focus:ring-2 focus:ring-cyan-600/50 focus:bg-white/10 transition-all duration-300"
                         required />
-                        <button @click="passwordIsVisible = !passwordIsVisible" type="button" class="absolute right-8 top-[24px] -translate-y-[50%]"> <div class="bg-black h-2 w-2"></div> </button>
+                        <button @click="passwordIsVisible = !passwordIsVisible" type="button" class="absolute right-4 top-[24px] -translate-y-[50%]"> <Icon :icon="passwordIsVisible ? 'mdi:eye' : 'mdi:eye-closed'"/> </button>
                 </div>
             </div>
 

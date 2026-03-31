@@ -1,10 +1,10 @@
 <script setup lang="ts">
     import useNotificationStore from '~/stores/notifications.store';
+import useTitleStore from '~/stores/title.store';
     import { NotificationsTypes } from '~/types/notification';
 
-    definePageMeta({
-        title: "zed31rus.ru | Home"
-    })
+    const titleStore = useTitleStore();
+    titleStore.setCurrentPageTitle('Home')
 
     const notificationStore = useNotificationStore();
 
@@ -12,10 +12,19 @@
         alert("ALARM!!!")
     }
 
+    function handleInfoClick() {
+    setTimeout(() => {
+        notificationStore.createNotification(
+            NotificationsTypes.info,
+            { title: 'Info', message: 'Click!', additional: 'zed31rus.ru' }
+        );
+    }, 3000);
+}
+
 </script>
 <template>
     <div>
-        <button @click="notificationStore.createNotification(NotificationsTypes.info, { title: 'Info', message: 'Click!', additional: 'zed31rus.ru' })">
+        <button @click="handleInfoClick">
             info click
         </button>
     </div>
@@ -26,6 +35,11 @@
     </div>
     <div>
         <button @click="notificationStore.createNotification(NotificationsTypes.error, { title: 'Error', message: 'BOOM', additional: 'zed31rus.ru' })">
+            error BOOM
+        </button>
+    </div>
+    <div>
+        <button @click="notificationStore.createNotification(NotificationsTypes.error, { title: 'GANZ SOSI ZALUPU', message: 'huihuihuihuihuihui', additional: 'наебаловоСтан.кома' }, {name: 'ЧЕЧНЯ', fn: () => { navigateTo('https://www.aviasales.com/', {external: true}) }})">
             error BOOM
         </button>
     </div>

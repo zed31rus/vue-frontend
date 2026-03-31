@@ -1,19 +1,27 @@
 import useNotificationStore from "./notifications.store";
 
-const notificationsStore = useNotificationStore();
-
 const useTitleStore = defineStore('Title', {
-    state: {
-        notificationsStore: notificationsStore,
+    state: () => ({
         currentPageTitle : ''
-    }, actions: {
-        init: () => {
+    }), actions: {
+        init() {
+ 
+            const notificationsStore = useNotificationStore();
+
             useHead({
                 title: () => {
-                    if (notificationsStore.items.length > 0) return `(${notificationsStore.items.length}) zed31rus | ${currentPageTitle}`;
-                    if (notificationsStore.items.length = 0) return `zed31rus | ${currentPageTitle}`;
+                    if (notificationsStore.items.length > 0) return `(${notificationsStore.items.length}) zed31rus | ${this.currentPageTitle}`;
+                    else return `zed31rus | ${this.currentPageTitle}`;
                 }
             });
+        },
+        setCurrentPageTitle(title: string) {
+            this.currentPageTitle = title;
+        },
+        setDynamicTitle() {
+            
         }
     }
 })
+
+export default useTitleStore
