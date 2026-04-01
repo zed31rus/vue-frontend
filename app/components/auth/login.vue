@@ -3,7 +3,7 @@
     import { ref } from 'vue';
     import useNotificationStore from '~/stores/notifications.store';
     import { NotificationsTypes } from '~/types/notification';
-    import type { User } from '~/types/user';
+    import type { PersonalUser } from '~/types/user';
 
     const login = ref('');
     const password = ref('');
@@ -17,7 +17,7 @@
         const formLogin = login.value;
         const formPassword = password.value;
 
-        const res = await fetch('http://localhost:3100/auth/login', {
+        const res = await fetch('http://localhost:3010/auth/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -30,7 +30,7 @@
 
         if (!res.ok) notificationsStore.createNotification(NotificationsTypes.error, { title: "Login error", message: "error while logging in", additional: "zed31rus.ru" })
 
-        const body = await res.json() as { user: User };
+        const body = await res.json() as { user: PersonalUser };
 
         console.log(body)
 

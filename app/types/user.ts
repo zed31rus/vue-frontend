@@ -1,4 +1,4 @@
-export interface User {
+export interface PersonalUser {
   allowEmailFind: boolean
   allowLoginFind: boolean
   avatar: string | null
@@ -9,4 +9,11 @@ export interface User {
   login: string
   nickname: string
   uuid: string
+}
+
+export interface PublicUser {
+  uuid: string
+  nickname: string
+  avatar: string | null 
+  createdAt: string
 }

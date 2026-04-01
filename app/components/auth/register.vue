@@ -3,6 +3,7 @@
     import { ref } from 'vue';
     import useNotificationStore from '~/stores/notifications.store';
     import { NotificationsTypes } from '~/types/notification';
+import type { PublicUser } from '~/types/user';
 
     const usernamePlaceholderInitialState = 'Choose a name';
 
@@ -27,7 +28,7 @@
 
     const notificationStore = useNotificationStore();
 
-    function handleRegister() {
+    async function handleRegister() {
         if (password.value !== confirmPassword.value) {
             notificationStore.createNotification(NotificationsTypes.error, { title: 'Registration error', message: 'Passwords do not match', additional: 'zed31rus.ru'} );
             return;
@@ -36,11 +37,29 @@
         if (usernamePlaceholder.value == usernamePlaceholderInitialState) return
 
         const formLogin = login.value;
-        const formUsername = username.value || usernamePlaceholder.value;
+        const formNickname = username.value || usernamePlaceholder.value;
         const formPassword = password.value;
         const formEmail = email.value;
 
-        notificationStore.createNotification(NotificationsTypes.info, { title: 'Dev auth data', message: `login: ${formLogin} \n username: ${formUsername} \n email: ${formEmail} \n password: ${formPassword}`, additional: "zed31rus.ru" })
+        const res = await fetch('http://localhost:3010/auth/register', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                login: formLogin,
+                email: formEmail,
+                password: formPassword,
+                nickname: formNickname
+            })
+        });
+
+        if (!res.ok) notificationStore.createNotification(NotificationsTypes.error, { title: "Registration error", message: "error while registration", additional: "zed31rus.ru" })
+
+        const body = await res.json() as { user:  PublicUser};
+
+        console.log(body)
+
     };
 
 </script>

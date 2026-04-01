@@ -21,6 +21,23 @@ import useTitleStore from '~/stores/title.store';
     }, 3000);
 }
 
+async function mail() {
+
+    const resRefresh = await fetch('http://localhost:3010/auth/refresh', {
+        method: "POST",
+        credentials: 'include'
+    })
+
+    if (resRefresh.ok) console.log("refreshOK")
+
+    const res = await fetch('http://localhost:3010/account/emailVerificationSend', {
+        method: "POST",
+        credentials: 'include'
+    });
+
+    console.log(await res.json())
+}
+
 </script>
 <template>
     <div>
@@ -41,6 +58,11 @@ import useTitleStore from '~/stores/title.store';
     <div>
         <button @click="notificationStore.createNotification(NotificationsTypes.error, { title: 'GANZ SOSI ZALUPU', message: 'huihuihuihuihuihui', additional: 'наебаловоСтан.кома' }, {name: 'ЧЕЧНЯ', fn: () => { navigateTo('https://www.aviasales.com/', {external: true}) }})">
             error BOOM
+        </button>
+    </div>
+    <div>
+        <button @click="mail">
+            mail
         </button>
     </div>
 </template>
