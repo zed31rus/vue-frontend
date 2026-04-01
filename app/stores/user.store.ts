@@ -14,16 +14,6 @@ export const useUserStore = defineStore('user', {
     error: null
   }),
 
-  getters: {
-    isLoggedIn: (state): boolean => !!state.user,
-    
-    userName: (state): string => {
-      return state.user?.nickname || state.user?.login || 'Гость'
-    },
-    
-    isAdmin: (state): boolean => state.user?.isAdmin || false
-  },
-
   actions: {
     setUser(userData: PersonalUser) {
       this.user = userData
@@ -38,7 +28,5 @@ export const useUserStore = defineStore('user', {
         this.user.avatar = newAvatarUrl
       }
     }
-  },
-
-  persist: true
+  }
 })

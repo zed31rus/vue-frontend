@@ -41,7 +41,7 @@ import type { PublicUser } from '~/types/user';
         const formPassword = password.value;
         const formEmail = email.value;
 
-        const res = await fetch('http://localhost:3010/auth/register', {
+        const res = await fetch('http://localhost:3100/auth/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

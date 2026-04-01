@@ -13,30 +13,30 @@
     const userStore = useUserStore();
 
     async function handleLogin() {
+    try {
 
-        const formLogin = login.value;
-        const formPassword = password.value;
-
-        const res = await fetch('http://localhost:3010/auth/login', {
+        const body = await $fetch<{ user: PersonalUser }>('http://localhost:3100/auth/login', {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+            body: {
+                login: login.value,
+                password: password.value,
             },
-            body: JSON.stringify({
-                login: formLogin,
-                password: formPassword,
-            })
+            credentials: 'include'
         });
 
-        if (!res.ok) notificationsStore.createNotification(NotificationsTypes.error, { title: "Login error", message: "error while logging in", additional: "zed31rus.ru" })
-
-        const body = await res.json() as { user: PersonalUser };
-
-        console.log(body)
-
+        console.log('Успех:', body);
         userStore.setUser(body.user);
+        
+    } catch (err: any) {
+        console.error('Ошибка логина:', err);
 
-    };
+        notificationsStore.createNotification(NotificationsTypes.error, { 
+            title: "Login error", 
+            message: err.data?.message || "Check your credentials",
+            additional: "zed31rus.ru" 
+        });
+    }
+}
 
 </script>
 

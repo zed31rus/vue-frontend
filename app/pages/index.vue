@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import useNotificationStore from '~/stores/notifications.store';
-import useTitleStore from '~/stores/title.store';
+    import useTitleStore from '~/stores/title.store';
     import { NotificationsTypes } from '~/types/notification';
 
     const titleStore = useTitleStore();
@@ -21,23 +21,33 @@ import useTitleStore from '~/stores/title.store';
     }, 3000);
 }
 
-async function mail() {
+async function sendVerificationMail() {
+    try {
 
-    const resRefresh = await fetch('http://localhost:3010/auth/refresh', {
-        method: "POST",
-        credentials: 'include'
-    })
+        await $fetch('http://localhost:3100/auth/refresh', {
+            method: "POST",
+            credentials: 'include'
+        });
+        
+        console.log('Сессия обновлена');
 
-    if (resRefresh.ok) console.log("refreshOK")
+        const response = await $fetch('http://localhost:3100/account/emailVerificationSend', {
+            method: "POST",
+            credentials: 'include'
+        });
 
-    const res = await fetch('http://localhost:3010/account/emailVerificationSend', {
-        method: "POST",
-        credentials: 'include'
-    });
+        console.log('Письмо отправлено:', response);
 
-    console.log(await res.json())
+    } catch (err: any) {
+        console.error('Ошибка в процессе:', err.data || err.message);
+
+        notificationStore.createNotification(NotificationsTypes.error, { 
+            title: "Ошибка", 
+            message: err.data?.message || "Не удалось отправить письмо",
+            additional: "zed31rus.ru"
+        });
+    }
 }
-
 </script>
 <template>
     <div>
@@ -61,7 +71,7 @@ async function mail() {
         </button>
     </div>
     <div>
-        <button @click="mail">
+        <button @click="sendVerificationMail">
             mail
         </button>
     </div>
