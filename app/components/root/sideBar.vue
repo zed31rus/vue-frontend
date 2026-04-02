@@ -10,6 +10,7 @@ const isOpen = reactive({
 });
 
 const [scope, animate] = useAnimate();
+const userStore = useUserStore();
 
 const menuToggleIcon = ref("line-md:menu");
 
@@ -51,7 +52,6 @@ watch(() => isOpen.inProgress, async (val) => {
 const pages = [
     { id: 1, name: "Home", path: "/", ico: "material-symbols:family-home-rounded", position: "top" },
     { id: 2, name: "Soundpad", path: "/soundpad", ico: "material-symbols:library-music", position: "top" },
-    { id: 3, name: "Account", path: "/user/me", ico: "line-md:account", position: "bottom" }
 ];
 
 const sideBar = useTemplateRef('sideBar');
@@ -81,6 +81,12 @@ onClickOutside(sideBar, () => {if (isOpen.opened) closeMenu()})
                         :icon="page.ico"
                         :position="page.position"
                     />
+                    <li class="opacity-0 mt-auto">
+                        <NuxtLink :to="userStore.user ? '/user/me' : 'auth'" class="flex items-center gap-3 p-2 hover:bg-neutral-800/70 rounded-md transition-colors">
+                            <Icon icon="line-md:account" :ssr="true" class="text-xl" />
+                            <span>{{ userStore.user ? userStore.user.nickname : 'login' }}</span>
+                        </NuxtLink>
+                    </li>
                 </ul>
             </div>
         </div>

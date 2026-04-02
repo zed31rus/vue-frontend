@@ -23,10 +23,8 @@ export const useUserStore = defineStore('user', {
       this.user = null
     },
 
-    async updateAvatar(newAvatarUrl: string) {
-      if (this.user) {
-        this.user.avatar = newAvatarUrl
-      }
+    updateUser() {
+        
     }
   }
 })

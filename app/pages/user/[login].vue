@@ -1,8 +1,7 @@
 <script setup lang="ts">
-    const route = useRoute();
-    const login = route.params.login;
+import useTitleStore from '~/stores/title.store';
 
-    const data = useFetch('http')
+    const route = useRoute();
 
 </script>
 
