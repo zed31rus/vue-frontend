@@ -9,5 +9,7 @@
 
 </script>
 <template>
-    <div class="items-center justify-center"></div>
+    <div class="bg-neutral-900/50 rounded-2xl ">
+
+    </div>
 </template>

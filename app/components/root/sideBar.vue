@@ -71,7 +71,7 @@ onClickOutside(sideBar, () => {if (isOpen.opened) closeMenu()})
             </div>
 
             <div
-                class="sideBar absolute top-[44px] left-0 bg-neutral-800/50 backdrop-blur overflow-hidden rounded-b-'20px' w-10 h-0 flex flex-col" 
+                class="sideBar absolute top-[44px] left-0 bg-neutral-800/50 backdrop-blur overflow-hidden rounded-b-[20px] w-10 h-0 flex flex-col" 
                 v-if="isOpen.opened"
             >
                 <ul class="p-2.5 flex flex-col h-full space-y-1">

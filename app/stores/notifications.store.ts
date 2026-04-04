@@ -18,6 +18,10 @@ const useNotificationStore = defineStore('notificationStore', {
             }, { once: true });
 
             return notification;
+        },
+
+        closeAllNotifications() {
+            this.items = [];
         }
     }
 });

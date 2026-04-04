@@ -33,5 +33,18 @@ const close = (notification: AppNotificationType) => {
             :clickAction="() => close(item)"
             :buttonAction="item.action"
         />
+
+        <div v-if="notificationStore.items.length > 1" class="mt-2 flex justify-end">
+            <button 
+                @click.once.stop="notificationStore.closeAllNotifications();" 
+                class="relative overflow-hidden px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest 
+                text-white bg-white/5 
+                rounded-lg transition-all duration-200
+                hover:bg-white/15"
+            >
+                {{ 'close all' }}
+            </button>
+        </div>
+
     </NotificationsArea>
 </template>

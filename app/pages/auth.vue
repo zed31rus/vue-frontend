@@ -23,8 +23,8 @@ const onEnter = (el) => {
 </script>
 
 <template>
-  <div class="min-h-screen w-full flex items-center justify-center">
-    <div ref="container" class="w-full max-w-md bg-neutral-900/50 border border-white/5 backdrop-blur-2xl p-8 rounded-2xl shadow-2xl overflow-hidden relative">
+  
+    <div ref="container" class="w-full max-w-md bg-neutral-900/50 border backdrop-blur-2xl p-8 rounded-2xl shadow-2xl overflow-hidden relative">
       
       <Transition name="auth" mode="out-in" @enter="onEnter">
         <AuthLogin 
@@ -40,7 +40,6 @@ const onEnter = (el) => {
       </Transition>
 
     </div>
-  </div>
 </template>
 
 <style>
